@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List Manager - Profile</title>
+    <link rel="stylesheet" href="practice.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Form to Collect Personal Details -->
+      <div class="form-container" id="form-container">
+        <h2>Enter Your Personal Details</h2>
+        <form id="profile-form">
+          <input type="text" id="name" placeholder="Your Name" required /><br />
+          <input
+            type="email"
+            id="email"
+            placeholder="Your Email"
+            required
+          /><br />
+
+          <input
+            type="number"
+            id="age"
+            name="age"
+            placeholder="Enter your age"
+            min="0"
+            max="120"
+            required
+          />
+
+          <textarea
+            id="bio"
+            name="bio"
+            placeholder="Write a short bio about yourself"
+            rows="4"
+            cols="50"
+            required
+          ></textarea>
+
+          <button type="submit">Save Profile</button>
+        </form>
+      </div>
+
+      <div class="content">
+        <!-- Main content of the to-do list manager app goes here -->
+      </div>
+
+      <!-- Personal Details Section (after form submission) -->
+      <div class="profile-container" id="profile-container">
+        <div class="info-container">
+          <div class="todo-info"><h3>To-do List Manager</h3></div>
+          <div class="profile-part" align="left" style="margin-top: 10px;">
+            <p><strong style="font-size: 18px;">Name:</strong> <span id="profile-name" style="font-size: 18px;"></span></p>
+            <p><strong style="font-size: 18px;">Email:</strong> <span id="profile-email" style="font-size: 18px;"></span></p>
+            <p><strong style="font-size: 18px;">Age:</strong> <span id="profile-age" style="font-size: 18px;"></span></p>
+            <p><strong style="font-size: 18px;">Bio:</strong> <span id="profile-bio" style="font-size: 18px;"></span></p>
+          </div>
+        </div>
+        <button
+          class="btn1"
+          onclick="location.href='file:///C:/Users/lenovo/Desktop/Project/after%20register.htm'"
+        >
+          Create a New List
+        </button>
+        <button class="btn2" onclick="toggleDropdown()">View Your Lists</button>
+
+        <!-- Dropdown for existing lists -->
+        <!-- <div id="listDropdown"></div> -->
+      </div>
+    </div>
+
+    <script>
+      // Initial setup - Show the form
+      document.getElementById("form-container").style.display = "block";
+
+        // Check if the user has already filled in their profile
+        window.onload = function () {
+          const userProfile = localStorage.getItem("userProfile");
+
+          if (userProfile) {
+            // User's profile data exists, so skip the form and show the profile
+            const user = JSON.parse(userProfile);
+            document.getElementById("profile-name").textContent = user.name;
+            document.getElementById("profile-email").textContent = user.email;
+            document.getElementById("profile-age").textContent = user.age;
+            document.getElementById("profile-bio").textContent = user.bio;
+
+            // Hide form and show profile container
+            document.getElementById("form-container").style.display = "none";
+            document.getElementById("profile-container").style.display = "block";
+          } else {
+            // If no user profile exists, show the form
+            document.getElementById("form-container").style.display = "block";
+            document.getElementById("profile-container").style.display = "none";
+          }
+        };
+
+      // Handle form submission to save the profile
+      document
+        .getElementById("profile-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent form from reloading the page
+
+          const user = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            age: document.getElementById("age").value, // Added to capture age
+            bio: document.getElementById("bio").value,
+          };
+
+          // Save the profile to localStorage
+          localStorage.setItem("userProfile", JSON.stringify(user));
+
+          // Display user's profile information
+          document.getElementById("profile-name").textContent = user.name;
+          document.getElementById("profile-email").textContent = user.email;
+          document.getElementById("profile-age").textContent = user.age; // Display age
+          document.getElementById("profile-bio").textContent = user.bio;
+
+          // Hide form and show profile container
+          document.getElementById("form-container").style.display = "none";
+          document.getElementById("profile-container").style.display = "block";
+
+          // Display to-do lists (if needed)
+          displayTodoLists();
+        });
+
+      // Simulate user data (this would typically come from a server)
+      const user = {
+        name: "",
+        email: "",
+        bio: "",
+      };
+
+      // Function to display user's to-do lists
+      function displayTodoLists() {
+        const todoListsContainer = document.getElementById("todo-lists");
+        todoListsContainer.innerHTML = ""; // Clear existing lists
+        todoLists.forEach((todo) => {
+          const todoItem = document.createElement("div");
+          todoItem.classList.add("todo-item");
+          todoItem.innerHTML = `
+          <h4>${todo.title}</h4>
+          <p>${todo.description}</p>
+          <p><strong>Due Date:</strong> ${todo.dueDate}</p>
+          <div class="todo-actions">
+            <button class="btn-edit" onclick="editTodoList(${todo.id})">Edit</button>
+            <button class="btn-delete" onclick="deleteTodoList(${todo.id})">Delete</button>
+          </div>
+        `;
+          todoListsContainer.appendChild(todoItem);
+        });
+      }
+
+      // Handle form submission (save user's details)
+      document
+        .getElementById("profile-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent form from reloading the page
+
+          // Get form input values
+          user.name = document.getElementById("name").value;
+          user.email = document.getElementById("email").value;
+          user.bio = document.getElementById("bio").value;
+
+          // Display user's profile information
+          document.getElementById("profile-name").textContent = user.name;
+          document.getElementById("profile-email").textContent = user.email;
+          document.getElementById("profile-bio").textContent = user.bio;
+
+          // Switch from form to profile view
+          document.getElementById("form-container").style.display = "none";
+          document.getElementById("profile-container").style.display = "block";
+
+          // Display to-do lists
+          displayTodoLists();
+        });
+
+      // Create a new to-do list
+      document
+        .getElementById("create-list-button")
+        .addEventListener("click", function () {
+          const newListTitle = prompt("Enter new list title:");
+          const newListDescription = prompt("Enter list description:");
+          const newListDueDate = prompt("Enter due date:");
+
+          if (newListTitle && newListDescription && newListDueDate) {
+            const newTodo = {
+              id: todoLists.length + 1,
+              title: newListTitle,
+              description: newListDescription,
+              dueDate: newListDueDate,
+            };
+            todoLists.push(newTodo);
+            displayTodoLists();
+          }
+        });
+
+      // Edit an existing to-do list
+      function editTodoList(id) {
+        const todo = todoLists.find((item) => item.id === id);
+        if (todo) {
+          const newTitle = prompt("Edit list title:", todo.title);
+          const newDescription = prompt("Edit description:", todo.description);
+          const newDueDate = prompt("Edit due date:", todo.dueDate);
+
+          if (newTitle && newDescription && newDueDate) {
+            todo.title = newTitle;
+            todo.description = newDescription;
+            todo.dueDate = newDueDate;
+            displayTodoLists();
+          }
+        }
+      }
+
+      // Delete a to-do list
+      function deleteTodoList(id) {
+        const index = todoLists.findIndex((item) => item.id === id);
+        if (index > -1) {
+          todoLists.splice(index, 1);
+          displayTodoLists();
+        }
+      }
+
+      // Load lists from localStorage
+      function loadLists() {
+        const listDropdown = document.getElementById("profile-container");
+        // listDropdown.innerHTML = ""; // Clear previous entries
+        const listParent = document.createElement("div");
+        listParent.className = "listDropdown";
+        listDropdown.appendChild(listParent);
+
+        const lists = JSON.parse(localStorage.getItem("allLists")) || {};
+        if (Object.keys(lists).length === 0) {
+          listDropdown.innerHTML = "<p>No lists found.</p>";
+        } else {
+          Object.keys(lists).forEach((listName) => {
+            const listItem = document.createElement("div");
+            listItem.className = "list-item";
+            listItem.textContent = listName;
+            listItem.onclick = () =>
+              (location.href = `new-list.html?listName=${encodeURIComponent(
+                listName
+              )}`);
+            listParent.appendChild(listItem);
+          });
+        }
+      }
+
+      // Toggle dropdown visibility and load lists
+      function toggleDropdown() {
+        //reference or instance
+        const mainContainer = document.getElementById("profile-container");
+
+        const dropdown = document.getElementById("listDropdown");
+        const listParent = document.createElement("div");
+        // listDropdown.innerHTML = ""; // Clear previous entries
+        listParent.id = "listDropdown";
+        //null || undefined
+        if (!dropdown) {
+          mainContainer.appendChild(listParent);
+          const lists = JSON.parse(localStorage.getItem("allLists")) || {};
+          if (Object.keys(lists).length === 0) {
+            listDropdown.innerHTML = "<p>No lists found.</p>";
+          } else {
+            Object.keys(lists).forEach((listName) => {
+              const listItem = document.createElement("div");
+              listItem.className = "list-item";
+              listItem.textContent = listName;
+              listItem.onclick = () =>
+                (location.href = `new-list.html?listName=${encodeURIComponent(
+                  listName
+                )}`);
+              listParent.appendChild(listItem);
+            });
+          }
+          loadLists();
+        } else if (dropdown) {
+          const element = document.getElementById("listDropdown");
+          mainContainer.removeChild(element);
+        }
+      }
+
+      function loadLists() {
+        const listDropdown = document.getElementById("listDropdown");
+        listDropdown.innerHTML = ""; // Clear previous entries
+
+        const lists = JSON.parse(localStorage.getItem("allLists")) || {};
+        if (Object.keys(lists).length === 0) {
+          listDropdown.innerHTML = "<p>No lists found.</p>";
+        } else {
+          Object.keys(lists).forEach((listName) => {
+            const list = lists[listName]; // Get the list details (tasks)
+            const completedTasks = list.filter((task) => task.completed).length;
+            const totalTasks = list.length;
+            const completionPercentage = totalTasks
+              ? Math.round((completedTasks / totalTasks) * 100)
+              : 0;
+
+            const listItem = document.createElement("div");
+            listItem.className = "list-item";
+            listItem.innerHTML = `
+        <h4>${listName}</h4>
+        <p>${totalTasks} tasks, ${completedTasks} completed</p>
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: ${completionPercentage}%;"></div>
+        </div>
+        <p>${completionPercentage}% completed</p>
+      `;
+            listItem.onclick = () =>
+              (location.href = `new-list.html?listName=${encodeURIComponent(
+                listName
+              )}`);
+            listDropdown.appendChild(listItem);
+          });
+        }
+      }
+      function loadLists() {
+        const listDropdown = document.getElementById("listDropdown");
+        listDropdown.innerHTML = ""; // Clear previous entries
+
+        const lists = JSON.parse(localStorage.getItem("allLists")) || {};
+        if (Object.keys(lists).length === 0) {
+          listDropdown.innerHTML = "<p>No lists found.</p>";
+        } else {
+          Object.keys(lists).forEach((listName) => {
+            const list = lists[listName]; // Get the list details (tasks)
+            const completedTasks = list.filter((task) => task.completed).length;
+            const totalTasks = list.length;
+            const completionPercentage = totalTasks
+              ? Math.round((completedTasks / totalTasks) * 100)
+              : 0;
+
+            const listItem = document.createElement("div");
+            listItem.className = "list-item";
+            listItem.innerHTML = `
+        <h4>${listName}</h4>
+        <p>${totalTasks} tasks, ${completedTasks} completed</p>
+        <div class="progress-bar-container">
+          <div class="progress-bar">
+            <div style="width: ${completionPercentage}%;"></div>
+          </div>
+          <button class="delete-btn" onclick="deleteList('${listName}')">Delete</button>
+        </div>
+        <p>${completionPercentage}% completed</p>
+      `;
+            listItem.onclick = (e) => {
+              if (!e.target.classList.contains("delete-btn")) {
+                location.href = `new-list.html?listName=${encodeURIComponent(
+                  listName
+                )}`;
+              }
+            };
+            listDropdown.appendChild(listItem);
+          });
+        }
+      }
+
+      // Function to delete a list
+      function deleteList(listName) {
+        const lists = JSON.parse(localStorage.getItem("allLists")) || {};
+        if (listName in lists) {
+          delete lists[listName]; // Remove the selected list
+          localStorage.setItem("allLists", JSON.stringify(lists)); // Save changes
+          loadLists(); // Refresh the dropdown
+        }
+      }
+    </script>
+  </body>
+</html>

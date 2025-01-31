@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team To-Do List</title>
+    <style>
+      body {
+        background-image: url("https://media.istockphoto.com/id/1594072752/video/blue-soft-wave-material.jpg?s=640x640&k=20&c=7cyVE-wS7SuXfPi0CIfFEzXnIGRZjJoMnoFkwOSVXcM=");
+        background-size: cover;
+      }
+
+      .todo-container {
+        margin: auto;
+        margin-top: 60px;
+        width: 800px;
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 5px 5px 5px 5px #5eb5c3;
+        padding: 40px 30px 70px;
+        border-radius: 10px;
+      }
+
+      .todo-container h1 {
+        display: flex;
+        margin-bottom: 20px;
+        font-size: 30px;
+        align-items: center;
+        text-decoration: underline;
+      }
+
+      img {
+        margin-left: 25px;
+      }
+
+      .input-section {
+        display: flex;
+        align-items: center;
+        background: #edeef0;
+        border-radius: 30px;
+        padding: 10px;
+        margin-bottom: 25px;
+      }
+
+      input {
+        flex: 1;
+        border: none;
+        border-radius: 12px;
+        padding: 10px;
+        margin-right: 5px;
+      }
+
+      button {
+        border: none;
+        padding: 10px 25px;
+        cursor: pointer;
+        border-radius: 15px;
+      }
+
+      #addTaskBtn {
+        background: rgb(3, 206, 210);
+        color: black;
+        font-size: 16px;
+      }
+
+      #addTaskBtn:hover {
+        background-color: #0092a8;
+      }
+
+      #audioBtn {
+        padding: 7px;
+        background-color: rgb(3, 206, 210);
+        font-size: 20px;
+        margin-right: 10px;
+      }
+
+      #audioBtn:hover {
+        background-color: #0092a8;
+      }
+
+      .delete-btn {
+        background-color: rgba(222, 74, 37, 0.859);
+        padding: 10px 15px;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 15px;
+        margin-left: 25px;
+        margin-right: 10px;
+        display: flex;
+      }
+
+      .delete-btn:hover {
+        background-color: rgb(174, 43, 7);
+      }
+
+      .task-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      .taskList {
+        list-style-type: none;
+        padding: 0px;
+      }
+
+      #backBtn-container,
+      #homeBtn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      #backBtn,
+      #homeBtn {
+        background-color: transparent;
+      }
+
+      #backBtn:hover,
+      #homeBtn:hover {
+        transform: scale(1.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div style="display: flex">
+      <div id="homeBtn-container">
+        <a href="./index.html">
+          <button id="homeBtn">
+            <img src="C:\Users\lenovo\Desktop\Project\home.png" width="30px" height="30px" />
+          </button>
+        </a>
+      </div>
+      <div id="backBtn-container">
+        <a href="file:///C:/Users/lenovo/Desktop/Project/after%20register.htm">
+          <button id="backBtn">
+            <img src="C:\Users\lenovo\Desktop\Project\back.png" width="30px" height="30px" />
+          </button>
+        </a>
+      </div>
+    </div>
+
+    <div class="todo-container">
+      <h1>
+        Team To-Do List
+        <img
+          src="https://cdn.pixabay.com/photo/2022/05/22/17/22/to-do-7214069_1280.png"
+          width="100"
+          height="120"
+        />
+      </h1>
+
+      <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Enter task" />
+        <input
+          type="text"
+          id="memberInput"
+          placeholder="Assign to (Team Member)"
+        />
+        <input type="date" id="deadlineInput" />
+        <button id="audioBtn">🎤</button>
+        <button id="addTaskBtn">Add Task</button>
+      </div>
+
+      <ul id="taskList"></ul>
+    </div>
+
+    <script>
+      const taskInput = document.getElementById("taskInput");
+      const memberInput = document.getElementById("memberInput");
+      const deadlineInput = document.getElementById("deadlineInput");
+      const addTaskBtn = document.getElementById("addTaskBtn");
+      const audioBtn = document.getElementById("audioBtn");
+      const taskList = document.getElementById("taskList");
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const listName =
+        urlParams.get("listName") ||
+        prompt("Enter the name for your new list:");
+
+      if (!listName) {
+        alert("List name is required!");
+        window.location.href = "./index.html";
+      } else {
+        document.querySelector(
+          "h1"
+        ).textContent = `${listName} Team To-do List`;
+      }
+
+      function addTask(
+        taskText = taskInput.value.trim(),
+        memberName = memberInput.value.trim(),
+        deadline = deadlineInput.value,
+        completed = false
+      ) {
+        if (!taskText || !memberName || !deadline) {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        const listItem = document.createElement("li");
+        listItem.classList.add("task-item");
+        if (completed) listItem.classList.add("completed");
+
+        listItem.innerHTML = `
+          <div class="task-details">
+            <input type="checkbox" class="done-checkbox" ${
+              completed ? "checked" : ""
+            }>
+            <p><strong>Task:</strong> ${taskText}</p>
+            <p><strong>Assigned to:</strong> ${memberName}</p>
+            <p><strong>Deadline:</strong> ${deadline}</p>
+          </div>
+          <button class="delete-btn">Delete</button>
+        `;
+
+        listItem.querySelector(".delete-btn").addEventListener("click", () => {
+          listItem.remove();
+          saveTasks();
+        });
+
+        listItem
+          .querySelector(".done-checkbox")
+          .addEventListener("change", (e) => {
+            listItem.classList.toggle("completed", e.target.checked);
+            saveTasks();
+          });
+
+        taskList.appendChild(listItem);
+        taskInput.value = "";
+        memberInput.value = "";
+        deadlineInput.value = "";
+        saveTasks();
+      }
+
+      addTaskBtn.addEventListener("click", () => addTask());
+
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.lang = "en-US";
+
+        audioBtn.addEventListener("click", () => recognition.start());
+
+        recognition.onresult = (event) => {
+          const transcript = event.results[0][0].transcript;
+          addTask(transcript);
+        };
+
+        recognition.onerror = (event) => {
+          alert(`Speech recognition error: ${event.error}`);
+        };
+      } else {
+        audioBtn.disabled = true;
+        audioBtn.title = "Speech recognition is not supported in this browser.";
+      }
+
+      document.addEventListener("DOMContentLoaded", loadTasks);
+
+      function loadTasks() {
+        const allLists = JSON.parse(localStorage.getItem("allLists")) || {};
+        const tasks = allLists[listName] || [];
+        tasks.forEach((task) =>
+          addTask(task.text, task.member, task.deadline, task.completed)
+        );
+      }
+
+      function saveTasks() {
+        const tasks = Array.from(taskList.querySelectorAll(".task-item")).map(
+          (item) => ({
+            text: item
+              .querySelector("p:nth-child(2)")
+              .innerText.replace("Task: ", ""),
+            member: item
+              .querySelector("p:nth-child(3)")
+              .innerText.replace("Assigned to: ", ""),
+            deadline: item
+              .querySelector("p:nth-child(4)")
+              .innerText.replace("Deadline: ", ""),
+            completed: item.querySelector(".done-checkbox").checked,
+          })
+        );
+
+        const allLists = JSON.parse(localStorage.getItem("allLists")) || {};
+        allLists[listName] = tasks;
+        localStorage.setItem("allLists", JSON.stringify(allLists));
+      }
+      // Function to populate dropdown with lists from localStorage
+      function populateDropdown() {
+        const dropdown = document.getElementById("listDropdown");
+        dropdown.innerHTML = ""; // Clear existing content
+
+        const allLists = JSON.parse(localStorage.getItem("allLists")) || {};
+        if (Object.keys(allLists).length === 0) {
+          dropdown.innerHTML = "<p>No lists found.</p>";
+        } else {
+          Object.keys(allLists).forEach((listName) => {
+            const listItem = document.createElement("div");
+            listItem.className = "list-item";
+            listItem.textContent = listName;
+            listItem.onclick = () => {
+              // Redirect to the new list page
+              location.href = `new-list.html?listName=${encodeURIComponent(
+                listName
+              )}`;
+            };
+
+            dropdown.appendChild(listItem);
+          });
+        }
+      }
+
+      // Automatically load lists on page load
+      window.onload = function () {
+        populateDropdown();
+      };
+    </script>
+  </body>
+</html>

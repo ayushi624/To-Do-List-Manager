@@ -1,0 +1,282 @@
+#button-container {
+  display: flex;
+}
+
+#list {
+  background-color: transparent;
+  color: #0985d1;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 150px;
+  margin-top: 30px;
+}
+
+#list:hover {
+  box-shadow: 5px 5px #c7e6fa;
+  background-color: #91cbf0;
+  color: white;
+}
+
+#grp {
+  background-color: transparent;
+  border: none;
+  color: #0985d1;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  font-size: 18px;
+  padding: 10px 15px;
+  font-size: 20px;
+  border-radius: 8px;
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+#grp:hover {
+  box-shadow: 5px 5px #c7e6fa;
+  background-color: #91cbf0;
+  color: white;
+}
+
+#signin {
+  background-color: transparent;
+  border: 2px solid #0985d1;
+  color: #0985d1;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-left: 500px;
+  margin-top: 30px;
+}
+
+#signin:hover {
+  background-color: #0985d1;
+  color: white;
+}
+
+#img1 {
+  float: right;
+  border-radius: 40%;
+  width: 450px;
+  height: 350px;
+  margin-right: 10px;
+  margin-top: 70px;
+  border: none;
+  box-shadow: 6px 6px 6px 6px #c7e6fa;
+}
+
+#haha {
+  color: black;
+  font-size: 32px;
+  margin-top: 110px;
+  margin-left: 20px;
+  text-align: center;
+  font-family: Consolas;
+}
+
+#para {
+  color: #79797b;
+  font-size: 23px;
+  margin-left: 20px;
+  text-align: center;
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 200px;
+  margin-bottom: 150px;
+}
+
+.description {
+  margin-top: 28px;
+}
+
+.borderDiv {
+  width: 100px;
+  height: 5px;
+  background-color: #0985d1;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  justify-content: space-evenly;
+  margin-top: 40px;
+  max-width: 1100px;
+}
+
+.feature {
+  height: 190px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  justify-content: space-evenly;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+i {
+  line-height: 20px;
+}
+
+.feature span {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  margin: 0;
+}
+
+#contact-info {
+  background-color: #7db1d1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 60vh;
+  margin: auto;
+  /* margin-top: 200px; */
+  padding: 1px;
+  color: white;
+  position: relative;
+  bottom: 0;
+}
+
+#p1 {
+  font-size: 20px;
+}
+
+#img2 {
+  float: right;
+  border-radius: 40%;
+  width: 250px;
+  height: 200px;
+  margin-right: 110px;
+  margin-bottom: 50px;
+  border: none;
+  position: absolute;
+  right: 0;
+  top: 100px;
+}
+
+#members {
+  margin-left: 50px;
+  margin-top: 80px;
+  font-size: 28px;
+}
+
+#contact-team {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 30px;
+  margin-left: 50px;
+  font-size: 12px;
+}
+
+#mailPhone {
+display: flex;
+align-items: center;
+gap: 4px;
+}
+
+#dot {
+  height: 5px;
+  width: 5px;
+  background-color: white;
+  border-radius: 100%;
+}
+
+#listItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#contact-team1 {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#contact-team2 {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#contact-team3 {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#email {
+  color:white;
+  text-decoration: none;
+}
+
+#h11 {
+  text-align: center;
+  color: white;
+  margin-top: 30px;
+}
+
+p {
+  text-align: center;
+  color: white;
+}
+
+#scroll_top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background-color: white;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 1px 1px 5px 5px #858686;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+#p2 {
+  padding: 0;
+  color: black;
+}
+
+html {
+  scroll-behavior: smooth;
+}

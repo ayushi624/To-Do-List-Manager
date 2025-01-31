@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>To do list app</title>
+    <style>
+      body {
+        background-image: url("https://media.istockphoto.com/id/1594072752/video/blue-soft-wave-material.jpg?s=640x640&k=20&c=7cyVE-wS7SuXfPi0CIfFEzXnIGRZjJoMnoFkwOSVXcM=");
+        background-size: cover;
+      }
+
+      .todo-app {
+        margin: auto;
+        margin-top: 60px;
+        width: 600px;
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 5px 5px 5px 5px #5eb5c3;
+        padding: 40px 30px 70px;
+        border-radius: 10px;
+      }
+
+      .todo-app h2 {
+        display: flex;
+        margin-bottom: 20px;
+        font-size: 30px;
+        align-items: center;
+        text-decoration: underline;
+      }
+
+      img {
+        margin-left: 25px;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        background: #edeef0;
+        border-radius: 30px;
+        padding-left: 20px;
+        margin-bottom: 25px;
+      }
+
+      input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        padding: 10px;
+        font-weight: 15px;
+      }
+
+      button {
+        border: none;
+        padding: 15px 40px;
+        cursor: pointer;
+        border-radius: 15px;
+      }
+
+      #addBtn {
+        background: rgb(3, 206, 210);
+        color: #fff;
+        font-size: 16px;
+        color: black;
+      }
+
+      #addBtn:hover {
+        background-color: #0092a8;
+      }
+
+      .audio-icon {
+        width: 32px;
+        height: 30px;
+        border-radius: 50%;
+      }
+
+      #audio-assist-btn {
+        padding: 7px;
+        background-color: white;
+        margin-right: 10px;
+        background: rgb(3, 206, 210);
+        font-size: 20px;
+      }
+
+      #audio-assist-btn:hover {
+        background-color: #0092a8;
+      }
+
+      .delete-btn {
+        background-color: rgba(222, 74, 37, 0.859);
+        padding: 10px 15px;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 15px;
+        margin-left: 25px;
+        margin-right: 10px;
+        display: flex;
+      }
+      .delete-btn:hover {
+        background-color: rgb(174, 43, 7);
+      }
+      .task-done-checkbox {
+        margin-left: 350px;
+        cursor: pointer;
+      }
+      .task-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .taskList {
+        list-style-type: none;
+        padding: 0px;
+      }
+
+      #backBtn-container {
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+        margin-top: 8px;
+      }
+
+      #backBtn {
+        background-color: transparent;
+        font-size: 22px;
+      }
+
+      #backBtn:hover {
+        transform: scale(1.2);
+      }
+
+      #homeBtn-container {
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      #homeBtn {
+        background-color: transparent;
+        padding: 2px;
+        padding-left: 0%;
+      }
+
+      #homeBtn:hover {
+        transform: scale(1.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div style="display: flex">
+      <div id="homeBtn-container">
+        <a href="file:///C:/Users/lenovo/Desktop/Project/index.html"
+          ><button id="homeBtn">
+            <img
+              src="C:\Users\lenovo\Desktop\Project\home.png"
+              width="30px"
+              height="30px"
+            /></button
+        ></a>
+      </div>
+      <div id="backBtn-container">
+        <a href="file:///C:/Users/lenovo/Desktop/Project/after%20register.htm"
+          ><button id="backBtn">
+            <img
+              src="C:\Users\lenovo\Desktop\Project\back.png"
+              width="30px"
+              height="30px"
+            /></button
+        ></a>
+      </div>
+    </div>
+    <div class="todo-app">
+      <h2>
+        Personal To-do List
+        <img
+          src="https://cdn.pixabay.com/photo/2022/05/22/17/22/to-do-7214069_1280.png"
+          width="100"
+          height="120"
+        />
+      </h2>
+      <div class="row">
+        <input type="text" id="taskInput" placeholder="Add your text..." />
+        <button id="audio-assist-btn">🎤</button>
+        <button id="addBtn">Add</button>
+      </div>
+      <ul id="taskList"></ul>
+    </div>
+
+    <script>
+      // Selecting elements
+      const taskInput = document.getElementById("taskInput");
+      const addBtn = document.getElementById("addBtn");
+      const audioBtn = document.getElementById("audio-assist-btn");
+      const taskList = document.getElementById("taskList");
+    
+      // Get the list name from the URL or prompt user
+      const urlParams = new URLSearchParams(window.location.search);
+      const listName = urlParams.get('listName') || prompt("Enter the name for your new list:");
+    
+      // Redirect if no list name is provided
+      if (!listName) {
+        alert("List name is required!");
+        window.location.href = 'index.html';
+      } else {
+        document.querySelector("h2").textContent = `${listName} To-do List`;
+      }
+    
+      // Function to add a task
+      function addTask(taskText, completed = false) {
+        if (!taskText) {
+          taskText = taskInput.value.trim();
+        }
+        if (taskText === "") {
+          alert("Please enter a task.");
+          return;
+        }
+    
+        // Create list item
+        const listItem = document.createElement("li");
+        listItem.classList.add("task-item");
+        if (completed) listItem.classList.add("completed");
+    
+        listItem.innerHTML = `
+          <div class="task-details">
+            <input type="checkbox" class="done-checkbox" ${completed ? 'checked' : ''}>
+            <p><strong>Task:</strong> ${taskText}</p>
+          </div>
+          <button class="delete-btn">Delete</button>
+        `;
+    
+        // Add functionality to delete button
+        listItem.querySelector(".delete-btn").addEventListener("click", () => {
+          listItem.remove();
+          saveTasks();
+        });
+    
+        // Add functionality to "Mark as Done" checkbox
+        listItem.querySelector(".done-checkbox").addEventListener("change", (e) => {
+          listItem.classList.toggle("completed", e.target.checked);
+          saveTasks();
+        });
+    
+        // Append list item to task list and clear input field
+        taskList.appendChild(listItem);
+        taskInput.value = "";
+        saveTasks();
+      }
+    
+      // Event listener for Add button
+      addBtn.addEventListener("click", () => {
+        addTask();
+      });
+    
+      // Speech recognition setup
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+  
+      // Start voice recognition when audio button is clicked
+      audioBtn.addEventListener("click", () => {
+          console.log("Mic button clicked");
+          recognition.start();
+      });
+  
+      // When speech is recognized
+      recognition.onresult = (event) => {
+          const speechResult = event.results[0][0].transcript;
+          console.log("Recognized speech:", speechResult);
+          addTask(speechResult);
+      };
+  
+      // Error handling for speech recognition
+      recognition.onerror = (event) => {
+          console.error("Speech recognition error:", event.error);
+          alert(`Speech recognition error: ${event.error}`);
+      };
+  } else {
+      console.log("Speech recognition is not supported in this browser.");
+      audioBtn.disabled = true;
+      audioBtn.title = "Speech recognition is not supported in this browser.";
+  }
+  
+    
+      // Load tasks for this list from localStorage
+      document.addEventListener("DOMContentLoaded", loadTasks);
+    
+      function loadTasks() {  
+        const allLists = JSON.parse(localStorage.getItem('allLists')) || {};
+        const tasks = allLists[listName] || [];
+        tasks.forEach(task => addTask(task.text, task.completed));
+      }
+    
+      // Save tasks to localStorage
+      function saveTasks() {
+        const tasks = Array.from(taskList.querySelectorAll(".task-item")).map(item => ({
+          text: item.querySelector("p").innerText,
+          completed: item.classList.contains("completed")
+        }));
+    
+        const allLists = JSON.parse(localStorage.getItem('allLists')) || {};
+        allLists[listName] = tasks;
+        localStorage.setItem('allLists', JSON.stringify(allLists));
+      }
+    
+      // Save tasks when leaving the page
+      window.addEventListener("beforeunload", saveTasks);
+    </script>
+  </body>
+</html>

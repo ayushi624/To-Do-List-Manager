@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List Manager</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #d1f2fb;
+      }
+      .container {
+        height: 300px;
+        width: 600px;
+        text-align: center;
+        background: #ffffff;
+        padding: 20px 40px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px #4497ca;
+      }
+      h1 {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 24px;
+      }
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 60px;
+        margin-left: 90px;
+        margin-right: 90px;
+      }
+      .button {
+        width: 120px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #0985d1;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .button:hover {
+        background-color: #06629a;
+      }
+      .button.work {
+        background-color: #0985d1;
+      }
+      .button.work:hover {
+        background-color: #06629a;
+      }
+      .btn-container {
+        display: flex;
+        position: fixed;
+        left: 40px;
+        top: 40px;
+        gap: 30px;
+      }
+      #backBtn-container {
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+        margin-top: 8px;
+      }
+
+      #backBtn {
+        background-color: transparent;
+        font-size: 22px;
+        border: none;
+      }
+
+      #backBtn:hover {
+        transform: scale(1.2);
+      }
+
+      #homeBtn-container {
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+        margin-top: 5px;
+      }
+
+      #homeBtn {
+        background-color: transparent;
+        padding: 2px;
+        padding-left: 0%;
+        border: none;
+      }
+
+      #homeBtn:hover {
+        transform: scale(1.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="btn-container">
+      <div id="homeBtn-container">
+        <a href="file:///C:/Users/lenovo/Desktop/Project/index.html"
+          ><button id="homeBtn">
+            <img
+              src="C:\Users\lenovo\Desktop\Project\home.png"
+              width="30px"
+              height="30px"
+            /></button
+        ></a>
+      </div>
+      <div id="backBtn-container">
+        <a href="file:///C:/Users/lenovo/Desktop/Project/practice2.html"
+          ><button id="backBtn">
+            <img
+              src="C:\Users\lenovo\Desktop\Project\back.png"
+              width="30px"
+              height="30px"
+            /></button
+        ></a>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Welcome to Your To-Do List Manager</h1>
+      <p>Please select the purpose of your tasks:</p>
+      <div class="button-group">
+        <a href="file:///C:/Users/lenovo/Desktop/Project/todo.html"><button class="button personal">Personal</button></a>
+        <a href="file:///C:/Users/lenovo/Desktop/Project/todo2.htm"><button class="button work">Work</button></a>
+      </div>
+    </div>
+  </body>
+</html>
