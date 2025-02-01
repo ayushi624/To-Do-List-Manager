@@ -18,7 +18,7 @@ body {
   min-height: 100vh;
   /* background-color: white; */
   padding-top: 40px;
-  padding-bottom: 40px;
+  /* padding-bottom: 40px; */
   background: linear-gradient(45deg, #b1d4dd 50%, #d1f2fb 50%);
   /* text-align: center; */
 }
